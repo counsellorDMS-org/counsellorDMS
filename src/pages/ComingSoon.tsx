@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 
 //ASSET IMPORTS
-import background from "../assets/backgroundimage.jpeg";
+import background from "../assets/backgroundimage.jpg";
 import Logo from "../assets/Logo.png";
 
 type deadline = {
@@ -65,24 +65,26 @@ export const ComingSoon = () => {
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         fontFamily: "Courier New",
+        
       }}
     >
       <Box
         id='Logo'
         sx={{
           position: "absolute",
-          top: "-5%",
-          left: "0%",
+          top: "5%",
+          left: "2.5%",
         }}
       >
-        <img src={Logo} alt='Logo' height='350' width='250' />
+        <img src={Logo} alt='Logo' height='350' />
       </Box>
       <Box
         id='text'
         sx={{
           position: "absolute",
           top: "25%",
-          left: "40%",
+          left: "30%",
+          fontSize: "px",
         }}
       >
         <h1>Coming Soon....</h1>
@@ -90,7 +92,7 @@ export const ComingSoon = () => {
         <p
           id='timer'
           style={{
-            fontSize: "30px",
+            fontSize: "40px",
           }}
         >
           <span>{timeLeft.days}</span>
