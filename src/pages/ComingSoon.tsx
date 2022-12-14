@@ -84,7 +84,7 @@ export const ComingSoon = () => {
           position: "absolute",
           top: "25%",
           left: "30%",
-          fontSize: "px",
+          fontSize: "20px",
         }}
       >
         <h1>Coming Soon....</h1>
@@ -92,7 +92,10 @@ export const ComingSoon = () => {
         <p
           id='timer'
           style={{
-            fontSize: "40px",
+            fontSize: "28px",
+            position:'absolute',
+            left: "15%",
+            top:"80%",
           }}
         >
           <span>{timeLeft.days}</span>
