@@ -75,7 +75,7 @@ export const ComingSoon = () => {
           left: "0%",
         }}
       >
-        <img src={Logo} alt='Logo' height='250' width='250' />
+        <img src={Logo} alt='Logo' height='350' width='250' />
       </Box>
       <Box
         id='text'
