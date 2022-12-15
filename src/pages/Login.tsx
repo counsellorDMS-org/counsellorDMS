@@ -1,5 +1,6 @@
 import React from "react";
 
+//Material UI imports
 import {
   Box,
   Typography,
@@ -12,27 +13,37 @@ import {
   Grid,
   Link,
 } from "@mui/material";
+import { SxProps } from "@mui/system";
 
+//Asset imports
 import Logo from "../assets/Logo.png";
 
-/* const Copyright = (props) => {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Typography color="inherit">
-          www.counsellordms.co.za
-        </Typography>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  } */
+type CopyrightProps = {
+  sx: SxProps;
+};
+
+const Copyright = (props: CopyrightProps) => {
+  return (
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
+    >
+      {"Copyright © "}
+      <Typography color='inherit'>CounsellorDMS</Typography>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+};
 
 export const Login = () => {
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <Box
+        id='login'
         sx={{
           marginTop: 8,
           display: "flex",
@@ -93,6 +104,7 @@ export const Login = () => {
           </Grid>
         </Box>
       </Box>
+      <Copyright sx={{ mt: 2, mb: 2 }} />
     </Container>
   );
 };
