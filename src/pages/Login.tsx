@@ -105,7 +105,6 @@ export const Login = () => {
       <Box
         id='login'
         sx={{
-          marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -178,7 +177,7 @@ export const Login = () => {
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 1, mb: 1 }} />
+      <Copyright sx={{ mt: 1 }} />
     </Container>
   );
 };
