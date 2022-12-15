@@ -1,10 +1,13 @@
+import { Login } from "./pages/Login";
+import { ComingSoon } from "./pages/ComingSoon";
+
 export const routes = [
   {
     path: "/",
-    element: <div>Home Page!</div>,
+    element: <ComingSoon />,
   },
   {
     path: "/login",
-    element: <div>Login Page</div>,
+    element: <Login />,
   },
 ];

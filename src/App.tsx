@@ -1,11 +1,14 @@
 //Environment imports
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //App imports
-import { ComingSoon } from "./pages/ComingSoon";
+import { routes } from "./routes";
+
+const router = createBrowserRouter(routes);
 
 function App() {
-  return <ComingSoon />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
