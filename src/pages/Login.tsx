@@ -162,7 +162,7 @@ export const Login = () => {
             type='submit'
             fullWidth
             variant='contained'
-            sx={{ mt: 3, mb: 1 }}
+            sx={{ mt: 2, mb: 1 }}
           >
             {" "}
             {/*mt is margin top, mb is margin bottom */}
@@ -178,7 +178,7 @@ export const Login = () => {
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 3, mb: 2 }} />
+      <Copyright sx={{ mt: 1, mb: 1 }} />
     </Container>
   );
 };
