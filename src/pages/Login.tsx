@@ -31,7 +31,9 @@ const Copyright = (props: CopyrightProps) => {
       {...props}
     >
       {"Copyright © "}
-      <Typography color='inherit'>CounsellorDMS</Typography>{" "}
+      <Link color='inherit' href='https://councellordms.co.za'>
+        www.councellordms.co.za
+      </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -45,7 +47,7 @@ export const Login = () => {
       <Box
         id='login'
         sx={{
-          marginTop: 8,
+          marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
