@@ -1,16 +1,13 @@
-//Environment imports
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ThemeProvider } from "@mui/material/styles";
 
 //App imports
 import App from "./App";
-import { theme } from "./theme";
 import reportWebVitals from "./reportWebVitals";
+import { theme } from "./theme.js";
+import { ThemeProvider } from "@mui/material/styles";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>

@@ -13,7 +13,6 @@ import {
   Grid,
   Link,
 } from "@mui/material";
-import { SxProps } from "@mui/system";
 
 //Formik  and Yup imports
 import { useFormik } from "formik";
@@ -22,20 +21,8 @@ import * as Yup from "yup";
 //Asset imports
 import Logo from "../assets/Logo.png";
 
-//Typescript requires props to have a type
-//Will not be necessary when we move to normal JS
-//Copyright props for the component
-type CopyrightProps = {
-  sx: SxProps;
-};
-//Login props for the function
-type LoginRequestPayload = {
-  email: string;
-  password: string;
-};
-
 // Copyright component
-const Copyright = (props: CopyrightProps) => {
+const Copyright = (props) => {
   return (
     <Typography
       variant='body2'
@@ -86,7 +73,7 @@ export const Login = () => {
     },
   });
   //Function to handle sign in
-  const handleSignIn = (values: LoginRequestPayload) => {
+  const handleSignIn = (values) => {
     const { email, password } = values;
 
     return;

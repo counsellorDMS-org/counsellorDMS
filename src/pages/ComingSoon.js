@@ -12,22 +12,11 @@ import { Box } from "@mui/material";
 import background from "../assets/backgroundimage.jpg";
 import Logo from "../assets/Logo.png";
 
-type deadline = {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-};
 export const ComingSoon = () => {
-  const callculateDeadline = () => {
+  const calculateDeadline = () => {
     //Function that calculates the time left until the deadline.
     const difference = +new Date("2023-01-20T14:00:00+00:00") - +new Date();
-    let timeLeft: deadline = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
+    let timeLeft = {};
     if (difference > 0) {
       timeLeft = {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -40,12 +29,12 @@ export const ComingSoon = () => {
   };
 
   //State that stores the time left until the deadline.
-  const [timeLeft, setTimeLeft] = useState(callculateDeadline());
+  const [timeLeft, setTimeLeft] = useState(calculateDeadline());
 
   //useEffect hook that updates the time left every second.
   useEffect(() => {
     setTimeout(() => {
-      setTimeLeft(callculateDeadline());
+      setTimeLeft(calculateDeadline());
     }, 1000);
   });
 
@@ -65,7 +54,6 @@ export const ComingSoon = () => {
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         fontFamily: "Courier New",
-        
       }}
     >
       <Box
@@ -93,9 +81,9 @@ export const ComingSoon = () => {
           id='timer'
           style={{
             fontSize: "28px",
-            position:'absolute',
+            position: "absolute",
             left: "15%",
-            top:"80%",
+            top: "80%",
           }}
         >
           <span>{timeLeft.days}</span>
