@@ -1,4 +1,9 @@
 import React from "react";
+import {useRef, useState, useEffect, useContext} from "react";
+
+import AuthContext from "../context/AuthProvider";
+
+import axios from '../api/axios';
 
 //Material UI imports
 import {
@@ -13,42 +18,34 @@ import {
   Grid,
   Link,
 } from "@mui/material";
-
 //Formik  and Yup imports
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 //Asset imports
 import Logo from "../assets/Logo.png";
+//Component imports
+import Copyright from "../components/Copyright";
 
-// Copyright component
-const Copyright = (props) => {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {"Copyright © "}
-      <Typography color='inherit'>
-        CounsellorDMS, stratuSolve Internship 22/23
-      </Typography>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
+const LOGIN_URL = '/auth/';
+
 
 export const Login = () => {
+  const {setAuth} = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errMessage, setErrMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   //Formik hook
   //Formik is a library that helps in building forms in React and React Native apps.
   //Formik is used to handle the form state and validation
   const formik = useFormik({
     //Formik initial values
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     //Formik validation
     //Yup is a JavaScript object schema description language and validator for value parsing and validation.
@@ -57,24 +54,63 @@ export const Login = () => {
       //Yup email validation of type string
       email: Yup.string()
         .email("Enter a valid email")
-        .max(250, "Email should be of maximum 255 characters length"),
+        .max(250, "Email should be of maximum 255 characters length").required("Email is required"),
       //Yup password validation of type string
       password: Yup.string()
         .min(8, "Password should be of minimum 8 characters length")
         .max(20, "Password should be of maximum 20 characters length")
-        .matches(/[0-9]/, "Password must contain a number")
-        .matches(/[a-z]/, "Password must contain a lowercase letter")
-        .matches(/[A-Z]/, "Password must contain a uppercase letter")
-        .matches(/[!@#$%^&*]/, "Password must contain a special character"),
+        .required("Password is required"),
     }),
     //Formik on submit
     onSubmit: (values) => {
+      
       handleSignIn(values);
     },
   });
+
+
+
+ /*  useEffect(() => {
+    userRef.current.focus();
+  }, []); */
+
+  useEffect(() => {
+    setErrMessage('');
+  }, [email, password]);
   //Function to handle sign in
-  const handleSignIn = (values) => {
-    const { email, password } = values;
+  const handleSignIn = async (e, values) => {
+    setEmail(values.email);
+    setPassword(values.password);
+    
+    //Axios post request to login
+    try {
+      const response = await  axios.post(LOGIN_URL,
+        JSON.stringify({email, password}),
+        {
+          headers: { "Content-Type": "application/json"},
+          withCredentials: true
+        } 
+        );
+        const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.roles;
+        
+        setAuth({email, password, roles, accessToken})
+        //set values to empty
+        setEmail('');
+        setPassword('');
+        setIsAuthenticated(true);
+    } catch (error) {
+      if (!error?.response) {
+        setErrMessage('Something went wrong. Please try again later');
+      } else if (error?.response?.status === 400) {
+        setErrMessage('Invalid email or password');
+      } else if (error?.response?.status === 401) {
+        setErrMessage('Unauthorized');
+      } else {
+        setErrMessage('Login Failed')
+      }
+      errRef.current.focus();
+    }
 
     return;
   };
@@ -109,18 +145,22 @@ export const Login = () => {
         {/* Material UI Typography
             Typography is the text component of Material UI. It is used to display text on the screen.
          */}
+         
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
+        <Typography ref={errRef} aria-live='assertive' color="red">
+         {errMessage}
+          </Typography>
         <Box component='form' onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
           <TextField
-            required
             margin='normal'
             fullWidth
             id='email'
             label='Email Address'
             name='email'
-            autoComplete='email'
+            autoComplete='off'
+            ref={userRef}
             value={formik.values.email}
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
@@ -128,7 +168,6 @@ export const Login = () => {
             autoFocus
           />
           <TextField
-            required
             margin='normal'
             fullWidth
             name='password'
@@ -139,7 +178,7 @@ export const Login = () => {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-            autoComplete='current-password'
+            
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
