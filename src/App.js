@@ -1,10 +1,13 @@
-import React from 'react';
-import './App.css';
-  
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+//App imports
+import { routes } from "./routes";
+
+const router = createBrowserRouter(routes);
+
 function App() {
-    return ( 
-      <h1> Hello World! </h1>
-    );
+  return <RouterProvider router={router} />;
 }
-  
+
 export default App;
