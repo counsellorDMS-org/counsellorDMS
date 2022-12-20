@@ -1,9 +1,9 @@
 import React from "react";
-import {useRef, useState, useEffect, useContext} from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 
 import AuthContext from "../context/AuthProvider";
 
-import axios from '../api/axios';
+import axios from "../api/axios";
 
 //Material UI imports
 import {
@@ -26,17 +26,16 @@ import Logo from "../assets/Logo.png";
 //Component imports
 import Copyright from "../components/Copyright";
 
-const LOGIN_URL = '/auth/';
-
+const LOGIN_URL = "/auth/";
 
 export const Login = () => {
-  const {setAuth} = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errMessage, setErrMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMessage, setErrMessage] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //Formik hook
   //Formik is a library that helps in building forms in React and React Native apps.
@@ -44,8 +43,8 @@ export const Login = () => {
   const formik = useFormik({
     //Formik initial values
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     //Formik validation
     //Yup is a JavaScript object schema description language and validator for value parsing and validation.
@@ -54,7 +53,8 @@ export const Login = () => {
       //Yup email validation of type string
       email: Yup.string()
         .email("Enter a valid email")
-        .max(250, "Email should be of maximum 255 characters length").required("Email is required"),
+        .max(250, "Email should be of maximum 255 characters length")
+        .required("Email is required"),
       //Yup password validation of type string
       password: Yup.string()
         .min(8, "Password should be of minimum 8 characters length")
@@ -63,51 +63,48 @@ export const Login = () => {
     }),
     //Formik on submit
     onSubmit: (values) => {
-      
-      handleSignIn(values);
+      setEmail(values.email);
+      setPassword(values.password);
+      handleSignIn();
     },
   });
 
-
-
- /*  useEffect(() => {
+  /*  useEffect(() => {
     userRef.current.focus();
   }, []); */
 
   useEffect(() => {
-    setErrMessage('');
+    setErrMessage("");
   }, [email, password]);
   //Function to handle sign in
-  const handleSignIn = async (e, values) => {
-    setEmail(values.email);
-    setPassword(values.password);
-    
+  const handleSignIn = async () => {
     //Axios post request to login
     try {
-      const response = await  axios.post(LOGIN_URL,
-        JSON.stringify({email, password}),
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email, password }),
         {
-          headers: { "Content-Type": "application/json"},
-          withCredentials: true
-        } 
-        );
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        
-        setAuth({email, password, roles, accessToken})
-        //set values to empty
-        setEmail('');
-        setPassword('');
-        setIsAuthenticated(true);
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+
+      setAuth({ email, password, roles, accessToken });
+      //set values to empty
+      setEmail("");
+      setPassword("");
+      setIsAuthenticated(true);
     } catch (error) {
       if (!error?.response) {
-        setErrMessage('Something went wrong. Please try again later');
+        setErrMessage("Something went wrong. Please try again later");
       } else if (error?.response?.status === 400) {
-        setErrMessage('Invalid email or password');
+        setErrMessage("Invalid email or password");
       } else if (error?.response?.status === 401) {
-        setErrMessage('Unauthorized');
+        setErrMessage("Unauthorized");
       } else {
-        setErrMessage('Login Failed')
+        setErrMessage("Login Failed");
       }
       errRef.current.focus();
     }
@@ -145,13 +142,13 @@ export const Login = () => {
         {/* Material UI Typography
             Typography is the text component of Material UI. It is used to display text on the screen.
          */}
-         
+
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <Typography ref={errRef} aria-live='assertive' color="red">
-         {errMessage}
-          </Typography>
+        <Typography ref={errRef} aria-live='assertive' color='red'>
+          {errMessage}
+        </Typography>
         <Box component='form' onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin='normal'
@@ -178,7 +175,6 @@ export const Login = () => {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-            
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
