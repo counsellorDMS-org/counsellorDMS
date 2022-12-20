@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 //useEffect is a react hook that allows us to use lifecycle methods in functional components.
 
 //COMPONENT IMPORTS
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 //ASSET IMPORTS
 import background from "../assets/backgroundimage.jpg";
@@ -95,7 +95,29 @@ export const ComingSoon = () => {
           <span>{timeLeft.seconds}</span>
           <span>s </span>
         </p>
+        
       </Box>
+      <Box 
+      id = 'Button'
+          sx={
+            {
+              position:"absolute" ,
+              top:"80%",
+              left:"6%",
+              frontSize:"28px",
+            }
+          }
+      >
+        <Button 
+        variant="contained"
+        color="secondary"
+        onClick={()=>{
+          alert('clicked');
+        }}
+        >
+          Demo Site 
+        </Button>
+      </Box> 
     </Box>
   );
 };
